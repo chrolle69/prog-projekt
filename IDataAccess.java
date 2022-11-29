@@ -1,3 +1,0 @@
-Interface IDataAccess {
-
-}
