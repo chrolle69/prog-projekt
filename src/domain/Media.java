@@ -1,8 +1,7 @@
 package domain;
-
 import java.util.List;
 
-abstract class Media {
+public abstract class Media {
     private String name;
 
     private List<String> categories;
@@ -37,6 +36,10 @@ abstract class Media {
 
     public Poster getPoster(){
         return this.poster;
+    }
+
+    public String toString(){
+        return this.name + "; " + this.year + "; " + String.join(",", this.categories) + "; " + this.rating;
     }
 
 }

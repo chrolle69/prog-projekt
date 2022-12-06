@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
-
 public class Series extends Media{
     private Map<Integer,List<Episode>> seasonToEpisode;
     public Series(String name, List<String> categories, double rating, String year, Poster poster, String seasonEpisodes){
@@ -22,17 +21,22 @@ public class Series extends Media{
             //Tempt arraylist to make Episode objects and later add that arraylist to the seasonToEpisode hashmap together with the season number
             List<Episode> temptEpisodeList = new ArrayList<>();
             //matcher.group(2) is the season number and matcher.group(3) is the amount of episodes
-            for (int i = 1; i <= Integer.valueOf(matcher.group(3)); i++){
+            for (int i = 1; i<=Integer.valueOf(matcher.group(3)); i++){
                 temptEpisodeList.add(new Episode("Episode " + String.valueOf(i)));
             }
             seasonToEpisode.put(Integer.valueOf(matcher.group(2)),temptEpisodeList);
             }
+
         }
-
-
-
 
     public Map<Integer,List<Episode>> getSeasonToEpisode(){
         return this.seasonToEpisode;
+    }
+    public String toString(){
+        String seasonToEpisodeString = "";
+        for (Map.Entry<Integer, List<Episode>> entry : this.seasonToEpisode.entrySet()){
+            seasonToEpisodeString += entry.getKey() + "-" + entry.getValue().size() + ", ";
+        }
+        return super.toString() + "; " + seasonToEpisodeString;
     }
 }
