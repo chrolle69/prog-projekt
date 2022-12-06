@@ -1,0 +1,29 @@
+org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
+public class TestClass {
+@BeforeEach
+public void setUp(){
+List<> categories = new arraylist<String>
+categories.add("crime") 
+Series series1 = new series("lorum", categories, 0.5, "2012", "1-9")
+Series series2 = new series("lorum", categories, 0.5, "2012", "1-35, 2-1")
+Series series3 = new series("lorum", categories, 0.5, "2012", "1-0, 0-1")
+System.out.println("**** START ****")
+}
+
+@AfterEach
+public void tearDown(){
+    System.out.println("**** END ****")
+}
+
+@Test
+public void test1(){
+int result = series1.getSeasonToEpisode();
+assertEquals(result,3);
+}
+}
