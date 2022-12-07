@@ -1,7 +1,12 @@
 package domain;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.FileNotFoundException;
 public abstract class Media {
     private String name;
 
@@ -10,16 +15,20 @@ public abstract class Media {
     private double rating;
     private String year;
 
-    private Poster poster;
+    private BufferedImage poster;
 
-    protected Map<String, List<Episode>> infoMap;
+    protected Map<String, List<Video>> infoMap;
 
-    public Media(String name, List<String> categories, double rating, String year, Poster poster){
+    public Media(String name, List<String> categories, double rating, String year, String path){
         this.name = name;
         this.categories = categories;
         this.rating = rating;
         this.year = year;
-        this.poster = poster;
+        try{
+            this.poster = ImageIO.read(new File(path+name+".jpg"));
+        }catch (IOException e){
+            System.out.println("Poster not found for " + name);
+        }
         this.infoMap = new LinkedHashMap<>();
     }
 
@@ -38,11 +47,11 @@ public abstract class Media {
         return this.year;
     }
 
-    public Poster getPoster(){
+    public BufferedImage getPoster(){
         return this.poster;
     }
 
-    public Map<String,List<Episode>> getInfoMap(){
+    public Map<String,List<Video>> getInfoMap(){
         return this.infoMap;
     }
 

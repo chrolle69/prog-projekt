@@ -1,9 +1,8 @@
 import data.DataAccessImpl;
-import domain.Episode;
+import domain.Video;
 import domain.Movie;
 import domain.Poster;
 import domain.Series;
-import domain.Episode;
 
 import java.util.Arrays;
 import java.util.Map;

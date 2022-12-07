@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import domain.Episode;
+import domain.Video;
 public class Movie extends Media{
 
     private String playMessage;
 
 
 
-    public Movie(String name, List<String> categories, double rating, String year, Poster poster){
-        super(name, categories, rating, year, poster);
+
+    public Movie(String name, List<String> categories, double rating, String year, String path){
+        super(name, categories, rating, year, path);
         this.playMessage = "You are now playing " + super.getName();
         constructInfoMap();
     }
@@ -23,7 +24,7 @@ public class Movie extends Media{
 
     private void constructInfoMap(){
         infoMap.put("Trailer",new ArrayList<>());
-        Episode trailer = new Episode("This is the trailer for: " + this.getName());
+        Video trailer = new Video("trailer for: " + this.getName());
         infoMap.get("Trailer").add(trailer);
     }
 }
