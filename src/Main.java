@@ -4,7 +4,7 @@ import domain.Movie;
 import domain.Poster;
 import domain.Series;
 import domain.Episode;
-
+import domain.Media;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         List<Movie> movieList = new ArrayList<Movie>();
+        List<Series> seriesList = new ArrayList<>();
         /*
         List<String> dieHardGenre = new ArrayList<>();
         dieHardGenre.add("Action");
@@ -33,21 +34,30 @@ public class Main {
         }
         */
         DataAccessImpl data = new DataAccessImpl();
+        List<Media> mediaList = new ArrayList<>();
         List<List<String>> movieFile = data.load("Data/film.txt");
+        List<List<String>> seriesFile = data.load("Data/serier.txt");
         for (List<String> movie : movieFile){
             String name = movie.get(0);
             String year = movie.get(1);
             List<String> category = new ArrayList<String>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(movie.get(3).replace(",","."));
             Poster poster = null;
-            movieList.add(new Movie(name,category,rating,year,poster));
+            mediaList.add(new Movie(name,category,rating,year,poster));
         }
-        Movie tempt = movieList.get(0);
-        for (Movie movie : movieList){
 
-            if (tempt.getRating() < movie.getRating()){
-                tempt = movie;
-            }
+        for (List<String> series : seriesFile){
+            String name = series.get(0);
+            String year = series.get(1);
+            List<String> category = new ArrayList<String>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
+            double rating = Double.valueOf(series.get(3).replace(",","."));
+            String seasonToEpisode = series.get(4);
+            Poster poster = null;
+            mediaList.add(new Series(name,category,rating,year,poster,seasonToEpisode));
         }
+
+        Media tempt = mediaList.get(102);
+        System.out.println(tempt.toString());
+        System.out.println(tempt.getInfoMap().get("Trailer").get(2).getPlayMessage());
         }
     }

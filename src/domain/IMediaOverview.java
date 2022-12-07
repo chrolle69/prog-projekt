@@ -1,6 +1,15 @@
 package domain;
-
 import java.util.ArrayList;
+import data.DataAccessImpl;
+import domain.Video;
+import domain.Movie;
+import domain.Poster;
+import domain.Series;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.List;
+import domain.Media;
 
 public interface IMediaOverview {
     ArrayList<Media> getMediaList();
