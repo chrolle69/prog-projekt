@@ -1,9 +1,7 @@
 import data.DataAccessImpl;
-import domain.Episode;
+import domain.Video;
 import domain.Movie;
-import domain.Poster;
 import domain.Series;
-import domain.Episode;
 import domain.Media;
 import java.util.Arrays;
 import java.util.Map;
@@ -42,8 +40,8 @@ public class Main {
             String year = movie.get(1);
             List<String> category = new ArrayList<String>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(movie.get(3).replace(",","."));
-            Poster poster = null;
-            mediaList.add(new Movie(name,category,rating,year,poster));
+            String posterPath = "Data/filmplakater/";
+            mediaList.add(new Movie(name,category,rating,year,posterPath));
         }
 
         for (List<String> series : seriesFile){
@@ -52,8 +50,8 @@ public class Main {
             List<String> category = new ArrayList<String>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(series.get(3).replace(",","."));
             String seasonToEpisode = series.get(4);
-            Poster poster = null;
-            mediaList.add(new Series(name,category,rating,year,poster,seasonToEpisode));
+            String posterPath = "Data/serieforsider/";
+            mediaList.add(new Series(name,category,rating,year,posterPath,seasonToEpisode));
         }
 
         Media tempt = mediaList.get(102);
