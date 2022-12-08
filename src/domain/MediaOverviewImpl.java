@@ -17,11 +17,12 @@ public class MediaOverviewImpl implements IMediaOverview {
 
     private List<Media> medias;
     private HashSet<String> categories;
-    private DataAccessImpl dataAccess;
+    private DataAccessImpl data;
 
     MediaOverviewImpl(){
         this.medias = new ArrayList<>();
         this.categories = new HashSet<>();
+        this.data = new DataAccessImpl();
         initialize();
     }
 
@@ -37,7 +38,6 @@ public class MediaOverviewImpl implements IMediaOverview {
   
 
     public void initialize() {
-        DataAccessImpl data = new DataAccessImpl();
         List<Media> mediaList = new ArrayList<>();
         HashSet<String> categories = new HashSet<>();
         List<List<String>> movieFile = data.load("Data/film.txt");
