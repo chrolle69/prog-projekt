@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import data.DataAccessImpl;
 import domain.Video;
 import domain.Movie;
-import domain.Poster;
 import domain.Series;
 
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 import java.util.*;
 import domain.Series;
-import domain.Episode;
+import domain.Video;
 
 import org.junit.Before;
 import org.junit.After;
@@ -26,19 +26,19 @@ public class SeriesTest {
 		
 		ArrayList<String> episodeNamesExcpected = new ArrayList<>();
 		ArrayList<String> episodeNamesResult = new ArrayList<>();
-		ArrayList<Episode> EpisodeList = new ArrayList<>();
-		HashMap<Integer, ArrayList<Episode>> hypo = new HashMap<>();
+		ArrayList<Video> EpisodeList = new ArrayList<>();
+		
 
-		EpisodeList.add(new Episode("Episode 1"));
-		EpisodeList.add(new Episode("Episode 2"));
-		hypo.put(1, EpisodeList);
+		EpisodeList.add(new Video("Episode 1"));
+		EpisodeList.add(new Video("Episode 2"));
+		
 
 		Series series = new Series(null, null, 0.5, null, null, season1 + "-" + episode1);
-		Map<Integer, List<Episode>> seasonToEpisode = series.getSeasonToEpisode();
+		Map<String, List<Video>> seasonToEpisode = series.getInfoMap();
 
-		List<Episode> episodes = seasonToEpisode.get(Integer.valueOf(season1));
+		List<Video> episodes = seasonToEpisode.get(season1);
 
-		for (Episode episode : episodes) {
+		for (Video episode : episodes) {
 			episodeNamesResult.add(episode.getName());
 		}
 
@@ -63,26 +63,25 @@ public class SeriesTest {
 		
 		ArrayList<String> episodeNamesExcpected = new ArrayList<>();
 		ArrayList<String> episodeNamesResult = new ArrayList<>();
-		ArrayList<Episode> EpisodeList = new ArrayList<>();
-		HashMap<Integer, ArrayList<Episode>> hypo = new HashMap<>();
+		ArrayList<Video> EpisodeList = new ArrayList<>();
 
-		EpisodeList.add(new Episode("Episode 1"));
-		EpisodeList.add(new Episode("Episode 2"));
-		hypo.put(1, EpisodeList);
+
+		EpisodeList.add(new Video("Episode 1"));
+		EpisodeList.add(new Video("Episode 2"));
 
 		Series series = new Series(null, null, 0.5, null, null, season1 + "-" + episode1 + ", " + season2 + "-" + episode2);
-		Map<Integer, List<Episode>> seasonToEpisode = series.getSeasonToEpisode();
+		Map<String, List<Video>> seasonToEpisode = series.getInfoMap();
 
-		List<Episode> episodes = seasonToEpisode.get(Integer.valueOf(season1));
-		for (Episode episode : episodes) {
+		List<Video> episodes = seasonToEpisode.get(season1);
+		for (Video episode : episodes) {
 			episodeNamesResult.add(episode.getName());
 		}
 		for (int i = 1; i < Integer.valueOf(episode1) + 1; i++) {
 			episodeNamesExcpected.add("Episode " + i);
 		}
 
-		episodes = seasonToEpisode.get(Integer.valueOf(season2));
-		for (Episode episode : episodes) {
+		episodes = seasonToEpisode.get(season2);
+		for (Video episode : episodes) {
 			episodeNamesResult.add(episode.getName());
 		}
 		for (int i = 1; i < Integer.valueOf(episode2) + 1; i++) {
