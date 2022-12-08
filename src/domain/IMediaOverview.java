@@ -8,10 +8,11 @@ import domain.Series;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.List;
-import domain.Media;
+import java.util.HashSet;
+
 
 public interface IMediaOverview {
-    ArrayList<Media> getMediaList();
+    List<Media> getMedias();
 
     ArrayList<Media> searchMedia(String keyword);
 
@@ -19,7 +20,7 @@ public interface IMediaOverview {
 
     ArrayList<Media> getFavoriteMedia();
 
-    ArrayList<String> getCategories();
+    HashSet<String> getCategories();
 
     void saveFavorite(Media media);
 
