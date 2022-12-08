@@ -47,8 +47,8 @@ public class MediaOverviewImpl implements IMediaOverview {
             String year = movie.get(1);
             List<String> category = new ArrayList<String>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(movie.get(3).replace(",","."));
-            Poster poster = null;
-            mediaList.add(new Movie(name,category,rating,year,poster));
+            String posterPath = "Data/filmplakater/";
+            mediaList.add(new Movie(name,category,rating,year,posterPath));
             for (String string : category) {
                 categories.add(string);
             }
@@ -60,8 +60,8 @@ public class MediaOverviewImpl implements IMediaOverview {
             List<String> category = new ArrayList<String>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(series.get(3).replace(",","."));
             String seasonToEpisode = series.get(4);
-            Poster poster = null;
-            mediaList.add(new Series(name,category,rating,year,poster,seasonToEpisode));
+            String posterPath = "Data/serieforsider/";
+            mediaList.add(new Series(name,category,rating,year,posterPath,seasonToEpisode));
             for (String string : category) {
                 categories.add(string);
             }
