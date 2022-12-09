@@ -1,12 +1,14 @@
-package domain;
+package Domain;
 import java.util.ArrayList;
-import data.DataAccessImpl;
-import domain.Video;
-import domain.Movie;
-import domain.Series;
+import Data.DataAccessImpl;
 
 import java.util.Arrays;
 import java.util.Map;
+
+import Domain.Movie;
+import Domain.Series;
+import Domain.Video;
+
 import java.util.List;
 import java.util.HashSet;
 

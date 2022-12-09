@@ -1,10 +1,11 @@
-package domain;
+package Domain;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import domain.Video;
+
+import Domain.Video;
 public class Movie extends Media{
 
     private String playMessage;

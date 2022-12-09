@@ -1,4 +1,4 @@
-package domain;
+package Domain;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;

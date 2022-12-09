@@ -1,11 +1,12 @@
-package domain;
+package Domain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
-import domain.Video;
+
+import Domain.Video;
 public class Series extends Media{
     public Series(String name, List<String> categories, double rating, String year, String path, String seasonEpisodes){
         super(name, categories, rating, year, path);
