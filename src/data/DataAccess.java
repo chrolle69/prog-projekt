@@ -1,7 +1,7 @@
-package Data;
+package data;
 import java.util.List;
 
-import Domain.Media;
+import domain.Media;
 public interface DataAccess {
     List<List<String>> load(String path);
     /*

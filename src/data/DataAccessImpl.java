@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Domain.Media;
+import domain.Media;
 
 public class DataAccessImpl implements DataAccess{
 

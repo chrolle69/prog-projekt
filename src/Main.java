@@ -1,11 +1,11 @@
 import java.util.Arrays;
 import java.util.Map;
 
-import Data.DataAccessImpl;
-import Domain.Media;
-import Domain.Movie;
-import Domain.Series;
-import Domain.Video;
+import data.DataAccessImpl;
+import domain.Media;
+import domain.Movie;
+import domain.Series;
+import domain.Video;
 
 import java.util.List;
 import java.util.ArrayList;
