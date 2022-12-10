@@ -10,6 +10,7 @@ import domain.Video;
 public class Series extends Media{
     public Series(String name, List<String> categories, double rating, String year, String path, String seasonEpisodes){
         super(name, categories, rating, year, path);
+        this.type = Type.SERIE;
         constructInfoMap(seasonEpisodes);
     }
 
@@ -29,10 +30,9 @@ public class Series extends Media{
                 temptEpisodeList.add(new Video("Episode " + String.valueOf(i)));
             }
             infoMap.put(matcher.group(2),temptEpisodeList);
-            }
-
         }
 
+    }
 
     public String toString(){
         boolean isFirst = true;

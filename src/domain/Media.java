@@ -18,6 +18,13 @@ public abstract class Media {
     private BufferedImage poster;
 
     protected Map<String, List<Video>> infoMap;
+    protected Type type;
+
+    enum Type
+    {
+        MOVIE,
+        SERIE
+    }
 
     public Media(String name, List<String> categories, double rating, String year, String path){
         this.name = name;
@@ -55,7 +62,9 @@ public abstract class Media {
         return this.infoMap;
     }
 
-    private void constructInfoMap(){}
+    public Type getType() {
+        return type;
+    }
 
     public String toString(){
         return this.name + "; " + this.year + "; " + String.join(",", this.categories) + "; " + this.rating;

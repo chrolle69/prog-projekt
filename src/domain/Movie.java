@@ -16,6 +16,7 @@ public class Movie extends Media{
     public Movie(String name, List<String> categories, double rating, String year, String path){
         super(name, categories, rating, year, path);
         this.playMessage = "You are now playing " + super.getName();
+        this.type = Type.MOVIE;
         constructInfoMap();
     }
 
