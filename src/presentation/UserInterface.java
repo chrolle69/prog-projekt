@@ -88,15 +88,7 @@ public class UserInterface
         favButton.setBackground(new Color(225, 0, 0));
         favButton.addActionListener(e -> {toggleFavorites(favButton);});
         topPanel.add(favButton);
-        /*
-        //Categorie Dropdown
-        String[] categories = new String[mediaOverview.getCategories().size()];
-        mediaOverview.getCategories().toArray(categories);
-        categorieBox = new JComboBox<>(categories);
-        categorieBox.setPreferredSize(new Dimension(100, 30));
-        categorieBox.addActionListener(e -> {categorieSearch();});
-        topPanel.add(categorieBox);
-        */
+        
         //Adding top area to the frames content pane. 
         pane.add(topPanel, BorderLayout.PAGE_START);
 
