@@ -190,14 +190,7 @@ public class UserInterface
         ArrayList<Media> ml = mediaOverview.searchMedia(keyword);
         updateDisplay(ml);
     }
-    /*
-    //Show media based on categorie
-    private void categorieSearch()
-    {
-        ArrayList<Media> mediaList = mediaOverview.searchMediaCategories(selectedCategories);
-        updateDisplay(mediaList);
-    }
-    */
+    
     //Add or remove categorie from list of selected categories
     private void categorieCheckBoxClicked(ItemEvent e, String categorie)
     {
