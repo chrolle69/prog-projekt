@@ -1,7 +1,7 @@
 package domain;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -10,23 +10,21 @@ import java.io.FileNotFoundException;
 public abstract class Media {
     private String name;
 
-    private ArrayList<String> categories;
+    private List<String> categories;
 
     private double rating;
     private String year;
 
     private BufferedImage poster;
 
-    protected LinkedHashMap<String, ArrayList<Video>> infoMap;
+    protected Map<String, List<Video>> infoMap;
+    enum Type {
+        MOVIE,
+        SERIES
+    }
     protected Type type;
 
-    enum Type
-    {
-        MOVIE,
-        SERIE
-    }
-
-    public Media(String name, ArrayList<String> categories, double rating, String year, String path){
+    public Media(String name, List<String> categories, double rating, String year, String path){
         this.name = name;
         this.categories = categories;
         this.rating = rating;
@@ -43,7 +41,7 @@ public abstract class Media {
         return this.name;
     }
 
-    public ArrayList<String> getCategories(){
+    public List<String> getCategories(){
         return this.categories;
     }
 
@@ -58,16 +56,18 @@ public abstract class Media {
         return this.poster;
     }
 
-    public LinkedHashMap<String, ArrayList<Video>> getInfoMap(){
+    public Map<String,List<Video>> getInfoMap(){
         return this.infoMap;
     }
 
-    public Type getType() {
-        return type;
-    }
+    private void constructInfoMap(){}
 
     public String toString(){
-        return this.name + "; " + this.year + "; " + String.join(",", this.categories) + "; " + this.rating;
+        return this.name + "; " + this.year + "; " + String.join(", ", this.categories) + "; " + this.rating;
+    }
+
+    public Type getType(){
+        return this.type;
     }
 
 }

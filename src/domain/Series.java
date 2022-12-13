@@ -5,12 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
-
 import domain.Video;
 public class Series extends Media{
     public Series(String name, List<String> categories, double rating, String year, String path, String seasonEpisodes){
         super(name, categories, rating, year, path);
-        this.type = Type.SERIE;
+        this.type = Type.SERIES;
         constructInfoMap(seasonEpisodes);
     }
 
@@ -30,9 +29,10 @@ public class Series extends Media{
                 temptEpisodeList.add(new Video("Episode " + String.valueOf(i)));
             }
             infoMap.put(matcher.group(2),temptEpisodeList);
+            }
+
         }
 
-    }
 
     public String toString(){
         boolean isFirst = true;
@@ -45,6 +45,8 @@ public class Series extends Media{
             }
 
         }
+        seasonToEpisodeString = seasonToEpisodeString.substring(0, seasonToEpisodeString.length()-2);
+        seasonToEpisodeString += ";";
         return super.toString() + "; " + seasonToEpisodeString;
     }
 }

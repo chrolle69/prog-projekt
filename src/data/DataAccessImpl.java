@@ -2,13 +2,12 @@ package data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import domain.Media;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import domain.Media;
 
 public class DataAccessImpl implements DataAccess{
 
@@ -34,19 +33,18 @@ public class DataAccessImpl implements DataAccess{
         return result;
     }
 
-    //NOT YET IMPLEMENTED
-    /*
-    public void saveFav(String path, List<Media> data){
+
+    public void saveFav(List<String> data){
         try{
-            File favFile = new File(path);
+            File favFile = new File("Data/favourites.txt");
             PrintWriter pw = new PrintWriter(favFile);
-            for(Media media : data){
-                pw.println(media.toString());
+            for(String media : data){
+                pw.println(media);
             }
             pw.close();
         }catch (FileNotFoundException e){
             System.out.println("No file. Saving nothing");
         }
     }
-*/
+
 }
