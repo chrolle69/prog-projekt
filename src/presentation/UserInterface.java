@@ -127,11 +127,7 @@ public class UserInterface
         pane.add(sidebar, BorderLayout.LINE_START);
 
         //Making the area that displays media. 
-        int displayBoxColoumns = frame.getWidth() / (displayBoxWidth + displayBoxGap);
-        int displayBoxRows = displayBoxes / displayBoxColoumns;
-        int panelheight = displayBoxRows * (displayBoxHeight + displayBoxGap);
         displayPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, displayBoxGap, displayBoxGap));
-        displayPanel.setPreferredSize(new Dimension(500, panelheight));
         displayPanel.addComponentListener(new ResizeListener());
         JScrollPane scrollp2 = new JScrollPane();
         scrollp2.setViewportView(displayPanel);
@@ -417,9 +413,9 @@ public class UserInterface
         public void componentResized(ComponentEvent e)
         {
             //Calculating and sets the new size of the frame. 
-            int displayBoxColoumns = frame.getWidth() / (displayBoxWidth + 20);
+            int displayBoxColoumns = (frame.getWidth() - 200) / (displayBoxWidth + displayBoxGap);
             int displayBoxRows = (int) Math.ceil(displayBoxes * 1.0 / displayBoxColoumns);
-            int panelheight = displayBoxRows * (displayBoxHeight + 20);
+            int panelheight = displayBoxRows * (displayBoxHeight + displayBoxGap);
             e.getComponent().setPreferredSize(new Dimension(500, panelheight));
         }
     }
