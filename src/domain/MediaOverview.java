@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.HashSet;
 
 
-public interface IMediaOverview {
-    List<Media> getMedias();
+public interface MediaOverview {
+    ArrayList<Media> getMediaList();
 
     ArrayList<Media> searchMedia(String keyword);
 
@@ -27,6 +27,8 @@ public interface IMediaOverview {
     void saveFavorite(Media media);
 
     void removeFavorite(Media media);
+
+    boolean isFavoriteMedia(Media media);
 
     void initialize();
 }
