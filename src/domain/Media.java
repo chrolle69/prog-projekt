@@ -1,8 +1,6 @@
 package domain;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -33,6 +31,7 @@ public abstract class Media {
             this.poster = ImageIO.read(new File(path+name+".jpg"));
         }catch (IOException e){
             System.out.println("Poster not found for " + name);
+            System.out.println(path+name+".jpg");
         }
         this.infoMap = new LinkedHashMap<>();
     }
@@ -68,6 +67,26 @@ public abstract class Media {
 
     public Type getType(){
         return this.type;
+    }
+    public void loadData(List<List<String>> mediaFile, List<Media> targetList) {
+        for (List<String> media : mediaFile) {
+            int listLength = mediaFile.size();
+            String name = media.get(0);
+            String year = media.get(1);
+            ArrayList<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
+            double rating = Double.valueOf(media.get(3).replace(",", "."));
+            if (listLength == 4) {
+                String seasonToEpisode = media.get(4);
+                String posterPath = "Data/serieforsider/";
+                targetList.add(new Series(name, category, rating, year, posterPath, seasonToEpisode));
+            } else {
+                String posterPath = "Data/filmplakater/";
+                targetList.add(new Movie(name, category, rating, year, posterPath));
+            }
+            for (String string : category) {
+                categories.add(string);
+            }
+        }
     }
 
 }

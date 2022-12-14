@@ -37,34 +37,34 @@ public class MediaOverviewImpl implements IMediaOverview {
 
   
 
+    public void loadData(List<List<String>> mediaFile, List<Media> targetList) {
+        for (List<String> media : mediaFile) {
+            int listLength = media.size();
+            String name = media.get(0);
+            String year = media.get(1);
+            ArrayList<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
+            double rating = Double.valueOf(media.get(3).replace(",", "."));
+            if (listLength == 5) {
+                String seasonToEpisode = media.get(4);
+                String posterPath = "Data/serieforsider/";
+                targetList.add(new Series(name, category, rating, year, posterPath, seasonToEpisode));
+            } else {
+                String posterPath = "Data/filmplakater/";
+                targetList.add(new Movie(name, category, rating, year, posterPath));
+            }
+                for (String string : category) {
+                    categories.add(string);
+                }
+            }
+        }
+
     public void initialize() {
         List<List<String>> movieFile = data.load("Data/film.txt");
         List<List<String>> seriesFile = data.load("Data/serier.txt");
         List<List<String>> favFile = data.load("Data/favourites.txt");
-        for (List<String> movie : movieFile){
-            String name = movie.get(0);
-            String year = movie.get(1);
-            ArrayList<String> category = new ArrayList<>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
-            double rating = Double.valueOf(movie.get(3).replace(",","."));
-            String posterPath = "Data/filmplakater/";
-            mediaList.add(new Movie(name,category,rating,year,posterPath));
-            for (String string : category) {
-                categories.add(string);
-            }
-        }
-
-        for (List<String> series : seriesFile){
-            String name = series.get(0);
-            String year = series.get(1);
-            ArrayList<String> category = new ArrayList<>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
-            double rating = Double.valueOf(series.get(3).replace(",","."));
-            String seasonToEpisode = series.get(4);
-            String posterPath = "Data/serieforsider/";
-            mediaList.add(new Series(name,category,rating,year,posterPath,seasonToEpisode));
-            for (String string : category) {
-                categories.add(string);
-            }
-        }
+        loadData(movieFile, mediaList);
+        loadData(seriesFile, mediaList);
+        loadData(favFile, favoriteList);
     }
     public void removeFavorite(Media media){
         int indexer = 0;
