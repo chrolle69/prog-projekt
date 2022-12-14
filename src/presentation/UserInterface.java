@@ -14,7 +14,7 @@ import java.util.HashSet;
 public class UserInterface
 {
     private JFrame frame;
-    private MediaOverview mediaOverview;
+    private MediaOverviewImpl mediaOverview;
     private JPanel displayPanel;
     private JComboBox<String> categorieBox;
     private JTextField searchField;
@@ -41,7 +41,6 @@ public class UserInterface
         this.isFavoritesOn = false;
         this.selectedCategories = new ArrayList<>();
         this.mediaOverview = new MediaOverviewImpl();
-        this.mediaOverview.initialize();
         initialize();
     }   
 
@@ -235,7 +234,7 @@ public class UserInterface
             JButton saveFavorite = new JButton();
             saveFavorite.setMaximumSize(new Dimension(125, 40));
             saveFavorite.setAlignmentX(Component.CENTER_ALIGNMENT);
-            if(mediaOverview.isFavoriteMedia(media))
+            if(mediaOverview.isFavorite(media))
             {
                 saveFavorite.setText("Remove Favorite");
                 saveFavorite.setBackground(new Color(225, 0, 0));
@@ -392,7 +391,7 @@ public class UserInterface
     //Add or Remove specified media from favorite list
     private void addRemoveFavorite(Media media, JButton button)
     {
-        if(mediaOverview.isFavoriteMedia(media))
+        if(mediaOverview.isFavorite(media))
         {
             button.setText("Add Favorite");
             button.setBackground(new Color(0, 225, 0));
@@ -402,7 +401,7 @@ public class UserInterface
         {
             button.setText("Remove Favorite");
             button.setBackground(new Color(225, 0, 0));
-            mediaOverview.saveFavorite(media);
+            mediaOverview.removeFavorite(media);
         }
     }
 
