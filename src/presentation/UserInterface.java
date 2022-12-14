@@ -22,6 +22,7 @@ public class UserInterface
     private JButton favButton;
     private ArrayList<JCheckBox> categorieCheckBoxes;
     private JScrollPane displayScrollPane;
+    private JRadioButton typeAll;
 
     private boolean isFavoritesOn;
     private List<String> selectedCategories;
@@ -108,7 +109,7 @@ public class UserInterface
         sidebar.add(typeLabel);
 
         //Type radio buttons
-        JRadioButton typeAll = new JRadioButton("All");
+        typeAll = new JRadioButton("All");
         JRadioButton typeMovie = new JRadioButton("Movie");
         JRadioButton typeSeries = new JRadioButton("Series");
         ButtonGroup bg = new ButtonGroup();
@@ -152,7 +153,7 @@ public class UserInterface
         }
         sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        //Button for applying categorie filtering
+        //Button for applying categorie and type filtering
         JButton applybutton = new JButton("Apply");
         applybutton.setMaximumSize(new Dimension(160, 20));
         applybutton.setAlignmentX(0f);
@@ -187,6 +188,8 @@ public class UserInterface
         isFavoritesOn = false;
         for(JCheckBox box : categorieCheckBoxes) {box.setSelected(false);}
         selectedCategories.clear();
+        selectedType = SearchType.ALL;
+        typeAll.setSelected(true);
         List<Media> mediaList = mediaOverview.getMediaList();
         updateDisplay(mediaList);
     }
@@ -197,6 +200,8 @@ public class UserInterface
         for(JCheckBox box : categorieCheckBoxes) {box.setSelected(false);}
         selectedCategories.clear();
         searchField.setText("Search");
+        selectedType = SearchType.ALL;
+        typeAll.setSelected(true);
 
         if(!isFavoritesOn)
             {
@@ -221,6 +226,8 @@ public class UserInterface
         isFavoritesOn = false;
         for(JCheckBox box : categorieCheckBoxes) {box.setSelected(false);}
         selectedCategories.clear();
+        selectedType = SearchType.ALL;
+        typeAll.setSelected(true);
         List<Media> ml = mediaOverview.searchMedia(keyword);
         updateDisplay(ml);
     }
