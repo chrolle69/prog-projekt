@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import domain.*;
+import domain.MediaOverview.SearchType;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class UserInterface
 
     private boolean isFavoritesOn;
     private List<String> selectedCategories;
+    private SearchType selectedType;
 
     private int displayBoxes;
     private int displayBoxWidth;
@@ -41,6 +43,7 @@ public class UserInterface
         this.popUpHeight = 500;
         this.isFavoritesOn = false;
         this.selectedCategories = new ArrayList<>();
+        this.selectedType = SearchType.ALL;
         this.mediaOverview = new MediaOverviewImpl();
         initialize();
     }   
@@ -96,16 +99,47 @@ public class UserInterface
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.PAGE_AXIS));
         sidebar.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        //Type Label
+        JLabel typeLabel = new JLabel("Type");
+        typeLabel.setMaximumSize(new Dimension(200, 20));
+        typeLabel.setHorizontalAlignment(JLabel.CENTER);
+        typeLabel.setAlignmentX(0.1f);
+        sidebar.add(typeLabel);
+
+        //Type radio buttons
+        JRadioButton typeAll = new JRadioButton("All");
+        JRadioButton typeMovie = new JRadioButton("Movie");
+        JRadioButton typeSeries = new JRadioButton("Series");
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(typeAll);
+        bg.add(typeMovie);
+        bg.add(typeSeries);
+        typeAll.setAlignmentX(Component.LEFT_ALIGNMENT);
+        typeMovie.setAlignmentX(Component.LEFT_ALIGNMENT);
+        typeSeries.setAlignmentX(Component.LEFT_ALIGNMENT);
+        typeAll.setSelected(true);
+        typeAll.addItemListener(e -> {selectedType = SearchType.ALL;});
+        typeMovie.addItemListener(e -> {selectedType = SearchType.MOVIE;});
+        typeSeries.addItemListener(e -> {selectedType = SearchType.SERIES;});
+        sidebar.add(typeAll);
+        sidebar.add(typeMovie);
+        sidebar.add(typeSeries);
+
+        //Categorie label
         JLabel categorieLabel = new JLabel("Categories");
         categorieLabel.setMaximumSize(new Dimension(200, 20));
         categorieLabel.setHorizontalAlignment(JLabel.CENTER);
         categorieLabel.setAlignmentX(0.1f);
         sidebar.add(categorieLabel);
+
+        //Filler to align the categorie label and categorie checkboxes properly
         Dimension d = new Dimension(200, 10);
         Box.Filler filler = new Box.Filler(d, d, d);
         filler.setAlignmentX(0.1f);
         sidebar.add(filler);
-        
+
+        //Categorie Checkboxes
         categorieCheckBoxes = new ArrayList<>();
         Set<String> cats = mediaOverview.getCategories();
         for(String cat : cats)
@@ -122,7 +156,7 @@ public class UserInterface
         JButton applybutton = new JButton("Apply");
         applybutton.setMaximumSize(new Dimension(160, 20));
         applybutton.setAlignmentX(0f);
-        applybutton.addActionListener(e -> {applyCategories();});
+        applybutton.addActionListener(e -> {applyCategoriesAndType();});
         sidebar.add(applybutton);
 
         pane.add(sidebar, BorderLayout.LINE_START);
@@ -205,12 +239,12 @@ public class UserInterface
     }
 
     //Show media with selected categories
-    private void applyCategories()
+    private void applyCategoriesAndType()
     {
         favButton.setBackground(new Color(225, 0, 0));
         isFavoritesOn = false;
         searchField.setText("Search");
-        List<Media> mediaList = mediaOverview.searchCategories(selectedCategories);
+        List<Media> mediaList = mediaOverview.searchCategories(selectedCategories, selectedType);
         updateDisplay(mediaList);
     }
 
@@ -220,6 +254,7 @@ public class UserInterface
         //Update the amount of displayboxes and clear the display panel
         displayBoxes = mediaList.size();
         displayPanel.removeAll();
+        resizeDisplayPanel();
 
         for(Media media : mediaList)
         {
@@ -359,8 +394,6 @@ public class UserInterface
                 playButton.addActionListener((ActionEvent e) -> {playVideo(episode.getPlayMessage());});
                 video.add(playButton);
                 videoList.add(video);
-
-                System.out.println(25 + videoTitle.getSize().height + 80);
             }
             videoList.add(Box.createVerticalGlue());
         }
@@ -422,17 +455,23 @@ public class UserInterface
         }
     }
 
+    //Resize the display panel
+    private void resizeDisplayPanel()
+    {
+        //Calculating and sets the new size of the frame. 
+        int displayBoxColoumns = (displayScrollPane.getViewport().getWidth()) / (displayBoxWidth + displayBoxGap);
+        int displayBoxRows = (int) Math.ceil(displayBoxes * 1.0 / displayBoxColoumns);
+        int panelheight = displayBoxRows * (displayBoxHeight + displayBoxGap);
+        displayPanel.setPreferredSize(new Dimension(500, panelheight));
+    }
+
     //ComponentListener for reacting to the window being resized. Ensures all media is shown.
     private class ResizeListener extends ComponentAdapter
     {
         @Override
         public void componentResized(ComponentEvent e)
         {
-            //Calculating and sets the new size of the frame. 
-            int displayBoxColoumns = (displayScrollPane.getViewport().getWidth()) / (displayBoxWidth + displayBoxGap);
-            int displayBoxRows = (int) Math.ceil(displayBoxes * 1.0 / displayBoxColoumns);
-            int panelheight = displayBoxRows * (displayBoxHeight + displayBoxGap);
-            e.getComponent().setPreferredSize(new Dimension(500, panelheight));
+            resizeDisplayPanel();
         }
     }
 

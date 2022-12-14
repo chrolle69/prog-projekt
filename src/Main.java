@@ -1,5 +1,6 @@
 import data.DataAccessImpl;
 import domain.Video;
+import domain.MediaOverview.SearchType;
 import domain.Movie;
 import domain.MediaOverviewImpl;
 import domain.Series;
@@ -24,7 +25,7 @@ public class Main {
         ArrayList<String> temptCat = new ArrayList<String>();
         temptCat.add("Action");
         temptCat.add("Horror");
-        List<Media> testCatSearch = OW.searchCategories(temptCat);
+        List<Media> testCatSearch = OW.searchCategories(temptCat, SearchType.ALL);
         System.out.println(testCatSearch);
 
 

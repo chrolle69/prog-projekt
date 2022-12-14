@@ -3,13 +3,19 @@ package domain;
 import java.util.List;
 import java.util.Set;
 
-public interface IMediaOverview {
-    
+public interface MediaOverview {
+
+    enum SearchType{
+        ALL,
+        MOVIE,
+        SERIES
+    }
+
     List<Media> getMediaList();
 
     List<Media> searchMedia(String keyword);
 
-    List<Media> searchCategories(List<String> categories);
+    List<Media> searchCategories(List<String> categories, SearchType type);
 
     List<Media> getFavoriteMedia();
 

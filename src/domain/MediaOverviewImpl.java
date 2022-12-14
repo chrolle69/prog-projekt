@@ -1,11 +1,12 @@
 package domain;
 
 import data.DataAccessImpl;
+import domain.Media.Type;
 
 import java.util.*;
 
 
-public class MediaOverviewImpl implements IMediaOverview {
+public class MediaOverviewImpl implements MediaOverview {
 
     private List<Media> mediaList;
     private Set<String> categories;
@@ -21,7 +22,6 @@ public class MediaOverviewImpl implements IMediaOverview {
         initialize();
     }
 
-
     public List<Media> getMediaList(){
         return this.mediaList;
     }
@@ -29,9 +29,7 @@ public class MediaOverviewImpl implements IMediaOverview {
     public Set<String> getCategories(){
         return this.categories;
     }
-
   
-
     public void loadData(List<List<String>> mediaFile, List<Media> targetList) {
         for (List<String> media : mediaFile) {
             int listLength = media.size();
@@ -93,14 +91,35 @@ public class MediaOverviewImpl implements IMediaOverview {
         return temptList;
     }
 
-    public List<Media> searchCategories(List<String> categories){
+    public List<Media> searchCategories(List<String> categories, SearchType type){
         List<Media> temptList = new ArrayList<>();
-        if(categories.size() == 0){
-            return getMediaList();
+        switch(type){
+            case ALL:
+                temptList.addAll(mediaList);
+                break;
+            case MOVIE:
+                for(Media media : mediaList){
+                    if(media.type == Type.MOVIE){
+                        temptList.add(media);
+                    }
+                }
+                break;
+            case SERIES:
+                for(Media media : mediaList){
+                    if(media.type == Type.SERIES){
+                        temptList.add(media);
+                    }
+                }
+                break;
         }
-        for (Media media : mediaList){
-            if (!Collections.disjoint(media.getCategories(),categories)){
-                temptList.add(media);
+        
+        if(categories.size() == 0){
+            return temptList;
+        }
+
+        for (int i = temptList.size() - 1; i >= 0; i--){
+            if (Collections.disjoint(temptList.get(i).getCategories(), categories)){
+                temptList.remove(i);
             }
         }
         return temptList;
