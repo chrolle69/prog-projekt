@@ -1,7 +1,7 @@
 package domain;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -10,21 +10,21 @@ import java.io.FileNotFoundException;
 public abstract class Media {
     private String name;
 
-    private List<String> categories;
+    private ArrayList<String> categories;
 
     private double rating;
     private String year;
 
     private BufferedImage poster;
 
-    protected LinkedHashMap<String, List<Video>> infoMap;
+    protected LinkedHashMap<String, ArrayList<Video>> infoMap;
     enum Type {
         MOVIE,
         SERIES
     }
     protected Type type;
 
-    public Media(String name, List<String> categories, double rating, String year, String path){
+    public Media(String name, ArrayList<String> categories, double rating, String year, String path){
         this.name = name;
         this.categories = categories;
         this.rating = rating;
@@ -41,7 +41,7 @@ public abstract class Media {
         return this.name;
     }
 
-    public List<String> getCategories(){
+    public ArrayList<String> getCategories(){
         return this.categories;
     }
 
@@ -56,7 +56,7 @@ public abstract class Media {
         return this.poster;
     }
 
-    public LinkedHashMap<String,List<Video>> getInfoMap(){
+    public LinkedHashMap<String, ArrayList<Video>> getInfoMap(){
         return this.infoMap;
     }
 

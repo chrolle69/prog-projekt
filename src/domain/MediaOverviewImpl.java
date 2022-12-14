@@ -44,7 +44,7 @@ public class MediaOverviewImpl implements IMediaOverview {
         for (List<String> movie : movieFile){
             String name = movie.get(0);
             String year = movie.get(1);
-            List<String> category = new ArrayList<>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
+            ArrayList<String> category = new ArrayList<>(Arrays.asList(movie.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(movie.get(3).replace(",","."));
             String posterPath = "Data/filmplakater/";
             mediaList.add(new Movie(name,category,rating,year,posterPath));
@@ -56,7 +56,7 @@ public class MediaOverviewImpl implements IMediaOverview {
         for (List<String> series : seriesFile){
             String name = series.get(0);
             String year = series.get(1);
-            List<String> category = new ArrayList<>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
+            ArrayList<String> category = new ArrayList<>(Arrays.asList(series.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(series.get(3).replace(",","."));
             String seasonToEpisode = series.get(4);
             String posterPath = "Data/serieforsider/";
@@ -113,6 +113,15 @@ public class MediaOverviewImpl implements IMediaOverview {
 
     public ArrayList<Media> getFavoriteMedia(){
         return this.favoriteList;
+    }
+
+    public boolean isFavorite(Media media){
+        for(Media favoriteMedia : favoriteList){
+            if(media.getName().equals(favoriteMedia.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void saveFavorite(){

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.*;
 import domain.Video;
 public class Series extends Media{
-    public Series(String name, List<String> categories, double rating, String year, String path, String seasonEpisodes){
+    public Series(String name, ArrayList<String> categories, double rating, String year, String path, String seasonEpisodes){
         super(name, categories, rating, year, path);
         this.type = Type.SERIES;
         constructInfoMap(seasonEpisodes);
@@ -23,7 +23,7 @@ public class Series extends Media{
             Video trailer = new Video("trailer for season " + matcher.group(2));
             infoMap.get("Trailer").add(trailer);
             //Tempt arraylist to make Episode objects and later add that arraylist to the seasonToEpisode hashmap together with the season number
-            List<Video> temptEpisodeList = new ArrayList<>();
+            ArrayList<Video> temptEpisodeList = new ArrayList<>();
             //matcher.group(2) is the season number and matcher.group(3) is the amount of episodes
             for (int i = 1; i<=Integer.valueOf(matcher.group(3)); i++){
                 temptEpisodeList.add(new Video("Episode " + String.valueOf(i)));
@@ -37,7 +37,7 @@ public class Series extends Media{
     public String toString(){
         boolean isFirst = true;
         String seasonToEpisodeString = "";
-        for (Map.Entry<String, List<Video>> entry : this.infoMap.entrySet()){
+        for (Map.Entry<String, ArrayList<Video>> entry : this.infoMap.entrySet()){
             if (!isFirst) {
                 seasonToEpisodeString += entry.getKey() + "-" + entry.getValue().size() + ", ";
             } else{
