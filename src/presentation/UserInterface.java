@@ -7,22 +7,23 @@ import javax.swing.*;
 
 import domain.*;
 
+import java.util.List;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.HashSet;
+import java.util.Set;
+import java.util.Map;
 
 public class UserInterface
 {
     private JFrame frame;
     private MediaOverviewImpl mediaOverview;
     private JPanel displayPanel;
-    private JComboBox<String> categorieBox;
     private JTextField searchField;
     private JButton favButton;
     private ArrayList<JCheckBox> categorieCheckBoxes;
+    private JScrollPane displayScrollPane;
 
     private boolean isFavoritesOn;
-    private ArrayList<String> selectedCategories;
+    private List<String> selectedCategories;
 
     private int displayBoxes;
     private int displayBoxWidth;
@@ -106,7 +107,7 @@ public class UserInterface
         sidebar.add(filler);
         
         categorieCheckBoxes = new ArrayList<>();
-        HashSet<String> cats = mediaOverview.getCategories();
+        Set<String> cats = mediaOverview.getCategories();
         for(String cat : cats)
         {
             JCheckBox catcheck = new JCheckBox(cat);
@@ -117,10 +118,11 @@ public class UserInterface
         }
         sidebar.add(Box.createRigidArea(new Dimension(0, 20)));
 
+        //Button for applying categorie filtering
         JButton applybutton = new JButton("Apply");
         applybutton.setMaximumSize(new Dimension(160, 20));
         applybutton.setAlignmentX(0f);
-        applybutton.addActionListener(e -> {mediaOverview.searchCategories(selectedCategories);});
+        applybutton.addActionListener(e -> {applyCategories();});
         sidebar.add(applybutton);
 
         pane.add(sidebar, BorderLayout.LINE_START);
@@ -128,15 +130,15 @@ public class UserInterface
         //Making the area that displays media. 
         displayPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, displayBoxGap, displayBoxGap));
         displayPanel.addComponentListener(new ResizeListener());
-        JScrollPane scrollp2 = new JScrollPane();
-        scrollp2.setViewportView(displayPanel);
-        scrollp2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollp2.getVerticalScrollBar().setUnitIncrement(16);
+        displayScrollPane = new JScrollPane();
+        displayScrollPane.setViewportView(displayPanel);
+        displayScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        displayScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        ArrayList<Media> mediaList = mediaOverview.getMediaList();
+        List<Media> mediaList = mediaOverview.getMediaList();
         updateDisplay(mediaList);
 
-        pane.add(scrollp2, BorderLayout.CENTER);
+        pane.add(displayScrollPane, BorderLayout.CENTER);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -149,8 +151,9 @@ public class UserInterface
         searchField.setText("Search");
         favButton.setBackground(new Color(225, 0, 0));
         isFavoritesOn = false;
-        categorieBox.setSelectedIndex(0);
-        ArrayList<Media> mediaList = mediaOverview.getMediaList();
+        for(JCheckBox box : categorieCheckBoxes) {box.setSelected(false);}
+        selectedCategories.clear();
+        List<Media> mediaList = mediaOverview.getMediaList();
         updateDisplay(mediaList);
     }
 
@@ -165,14 +168,14 @@ public class UserInterface
             {
                 isFavoritesOn = true;
                 favoriteButton.setBackground(new Color(0, 225, 0));
-                ArrayList<Media> fml = mediaOverview.getFavoriteMedia();
+                List<Media> fml = mediaOverview.getFavoriteMedia();
                 updateDisplay(fml);
             }
         else
             {
                 isFavoritesOn = false;
                 favoriteButton.setBackground(new Color(225, 0, 0));
-                ArrayList<Media> cml = mediaOverview.getMediaList();
+                List<Media> cml = mediaOverview.getMediaList();
                 updateDisplay(cml);
             }
     }
@@ -180,9 +183,11 @@ public class UserInterface
     //Show movies and series bases on search keyword. 
     private void search(String keyword)
     {
+        favButton.setBackground(new Color(225, 0, 0));
+        isFavoritesOn = false;
         for(JCheckBox box : categorieCheckBoxes) {box.setSelected(false);}
         selectedCategories.clear();
-        ArrayList<Media> ml = mediaOverview.searchMedia(keyword);
+        List<Media> ml = mediaOverview.searchMedia(keyword);
         updateDisplay(ml);
     }
     
@@ -199,8 +204,18 @@ public class UserInterface
         }
     }
 
+    //Show media with selected categories
+    private void applyCategories()
+    {
+        favButton.setBackground(new Color(225, 0, 0));
+        isFavoritesOn = false;
+        searchField.setText("Search");
+        List<Media> mediaList = mediaOverview.searchCategories(selectedCategories);
+        updateDisplay(mediaList);
+    }
+
     //Updates the panel that displays media with movies and series in the lists given.
-    private void updateDisplay(ArrayList<Media> mediaList)
+    private void updateDisplay(List<Media> mediaList)
     {
         //Update the amount of displayboxes and clear the display panel
         displayBoxes = mediaList.size();
@@ -300,7 +315,7 @@ public class UserInterface
         mediaPane.add(info, constraints);
 
         //Video List
-        LinkedHashMap<String, ArrayList<Video>> mediaVideoInfo = media.getInfoMap();
+        Map<String, List<Video>> mediaVideoInfo = media.getInfoMap();
         JPanel videoList = new JPanel();
         videoList.setLayout(new BoxLayout(videoList, BoxLayout.PAGE_AXIS));
 
@@ -344,6 +359,8 @@ public class UserInterface
                 playButton.addActionListener((ActionEvent e) -> {playVideo(episode.getPlayMessage());});
                 video.add(playButton);
                 videoList.add(video);
+
+                System.out.println(25 + videoTitle.getSize().height + 80);
             }
             videoList.add(Box.createVerticalGlue());
         }
@@ -401,7 +418,7 @@ public class UserInterface
         {
             button.setText("Remove Favorite");
             button.setBackground(new Color(225, 0, 0));
-            mediaOverview.removeFavorite(media);
+            mediaOverview.addFavorite(media);
         }
     }
 
@@ -412,7 +429,7 @@ public class UserInterface
         public void componentResized(ComponentEvent e)
         {
             //Calculating and sets the new size of the frame. 
-            int displayBoxColoumns = (frame.getWidth() - 200) / (displayBoxWidth + displayBoxGap);
+            int displayBoxColoumns = (displayScrollPane.getViewport().getWidth()) / (displayBoxWidth + displayBoxGap);
             int displayBoxRows = (int) Math.ceil(displayBoxes * 1.0 / displayBoxColoumns);
             int panelheight = displayBoxRows * (displayBoxHeight + displayBoxGap);
             e.getComponent().setPreferredSize(new Dimension(500, panelheight));

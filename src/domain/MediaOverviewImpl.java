@@ -1,22 +1,17 @@
 package domain;
 
 import data.DataAccessImpl;
-import domain.Movie;
-import domain.Series;
-import domain.Media;
 
 import java.util.*;
-import java.sql.Array;
 
 
 public class MediaOverviewImpl implements IMediaOverview {
 
-    private ArrayList<Media> mediaList;
-    private HashSet<String> categories;
+    private List<Media> mediaList;
+    private Set<String> categories;
     private DataAccessImpl data;
 
-    private ArrayList<Media> favoriteList;
-
+    private List<Media> favoriteList;
 
     public MediaOverviewImpl(){
         this.mediaList = new ArrayList<>();
@@ -27,11 +22,11 @@ public class MediaOverviewImpl implements IMediaOverview {
     }
 
 
-    public ArrayList<Media> getMediaList(){
+    public List<Media> getMediaList(){
         return this.mediaList;
     }
 
-    public HashSet<String> getCategories(){
+    public Set<String> getCategories(){
         return this.categories;
     }
 
@@ -42,7 +37,7 @@ public class MediaOverviewImpl implements IMediaOverview {
             int listLength = media.size();
             String name = media.get(0);
             String year = media.get(1);
-            ArrayList<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
+            List<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(media.get(3).replace(",", "."));
             if (listLength == 5) {
                 String seasonToEpisode = media.get(4);
@@ -84,8 +79,8 @@ public class MediaOverviewImpl implements IMediaOverview {
         saveFavorite();
     }
 
-    public ArrayList<Media> searchMedia(String keyword){
-        ArrayList<Media> temptList = new ArrayList<>();
+    public List<Media> searchMedia(String keyword){
+        List<Media> temptList = new ArrayList<>();
         if (keyword.isEmpty()){
             return getMediaList();
         }
@@ -98,8 +93,8 @@ public class MediaOverviewImpl implements IMediaOverview {
         return temptList;
     }
 
-    public ArrayList<Media> searchCategories(ArrayList<String> categories){
-        ArrayList<Media> temptList = new ArrayList<>();
+    public List<Media> searchCategories(List<String> categories){
+        List<Media> temptList = new ArrayList<>();
         if(categories.size() == 0){
             return getMediaList();
         }
@@ -111,7 +106,7 @@ public class MediaOverviewImpl implements IMediaOverview {
         return temptList;
     }
 
-    public ArrayList<Media> getFavoriteMedia(){
+    public List<Media> getFavoriteMedia(){
         return this.favoriteList;
     }
 

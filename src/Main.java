@@ -19,12 +19,12 @@ public class Main {
         OW.addFavorite(OW.getMediaList().get(40));
         OW.removeFavorite(OW.getMediaList().get(109));
         List<Media> favList = OW.getFavoriteMedia();
-        ArrayList<Media> testSearch = OW.searchMedia("Hou");
+        List<Media> testSearch = OW.searchMedia("Hou");
         System.out.println(testSearch);
         ArrayList<String> temptCat = new ArrayList<String>();
         temptCat.add("Action");
         temptCat.add("Horror");
-        ArrayList<Media> testCatSearch = OW.searchCategories(temptCat);
+        List<Media> testCatSearch = OW.searchCategories(temptCat);
         System.out.println(testCatSearch);
 
 

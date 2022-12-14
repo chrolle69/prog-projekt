@@ -1,28 +1,28 @@
 package domain;
+
 import java.io.IOException;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.FileNotFoundException;
+
 public abstract class Media {
+
     private String name;
-
-    private ArrayList<String> categories;
-
+    private List<String> categories;
     private double rating;
     private String year;
-
     private BufferedImage poster;
-
-    protected LinkedHashMap<String, ArrayList<Video>> infoMap;
+    protected Map<String, List<Video>> infoMap;
+    protected Type type;
+    
     enum Type {
         MOVIE,
         SERIES
     }
-    protected Type type;
+    
 
-    public Media(String name, ArrayList<String> categories, double rating, String year, String path){
+    public Media(String name, List<String> categories, double rating, String year, String path){
         this.name = name;
         this.categories = categories;
         this.rating = rating;
@@ -40,7 +40,7 @@ public abstract class Media {
         return this.name;
     }
 
-    public ArrayList<String> getCategories(){
+    public List<String> getCategories(){
         return this.categories;
     }
 
@@ -55,11 +55,9 @@ public abstract class Media {
         return this.poster;
     }
 
-    public LinkedHashMap<String, ArrayList<Video>> getInfoMap(){
+    public Map<String, List<Video>> getInfoMap(){
         return this.infoMap;
     }
-
-    private void constructInfoMap(){}
 
     public String toString(){
         return this.name + "; " + this.year + "; " + String.join(", ", this.categories) + "; " + this.rating;
@@ -73,7 +71,7 @@ public abstract class Media {
             int listLength = mediaFile.size();
             String name = media.get(0);
             String year = media.get(1);
-            ArrayList<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
+            List<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
             double rating = Double.valueOf(media.get(3).replace(",", "."));
             if (listLength == 4) {
                 String seasonToEpisode = media.get(4);

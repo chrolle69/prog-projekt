@@ -1,18 +1,13 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import domain.Video;
+import java.util.ArrayList;
+
 public class Movie extends Media{
 
     private String playMessage;
 
-
-
-
-    public Movie(String name, ArrayList<String> categories, double rating, String year, String path){
+    public Movie(String name, List<String> categories, double rating, String year, String path){
         super(name, categories, rating, year, path);
         this.playMessage = "You are now playing " + super.getName();
         this.type = Type.MOVIE;
@@ -25,7 +20,7 @@ public class Movie extends Media{
 
     private void constructInfoMap(){
         infoMap.put("Trailer",new ArrayList<>());
-        Video trailer = new Video("trailer for: " + this.getName());
+        Video trailer = new Video("Trailer for movie: ");
         infoMap.get("Trailer").add(trailer);
     }
 }

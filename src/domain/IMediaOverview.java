@@ -1,26 +1,19 @@
 package domain;
-import java.util.ArrayList;
-import data.DataAccessImpl;
-import domain.Video;
-import domain.Movie;
-import domain.Series;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.List;
-import java.util.HashSet;
-
+import java.util.Set;
 
 public interface IMediaOverview {
-    ArrayList<Media> getMediaList();
+    
+    List<Media> getMediaList();
 
-    ArrayList<Media> searchMedia(String keyword);
+    List<Media> searchMedia(String keyword);
 
-    ArrayList<Media> searchCategories(ArrayList<String> categories);
+    List<Media> searchCategories(List<String> categories);
 
-    ArrayList<Media> getFavoriteMedia();
+    List<Media> getFavoriteMedia();
 
-    HashSet<String> getCategories();
+    Set<String> getCategories();
 
     void saveFavorite();
 
