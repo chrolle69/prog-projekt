@@ -17,7 +17,7 @@ public abstract class Media {
 
     private BufferedImage poster;
 
-    protected Map<String, List<Video>> infoMap;
+    protected LinkedHashMap<String, List<Video>> infoMap;
     enum Type {
         MOVIE,
         SERIES
@@ -56,7 +56,7 @@ public abstract class Media {
         return this.poster;
     }
 
-    public Map<String,List<Video>> getInfoMap(){
+    public LinkedHashMap<String,List<Video>> getInfoMap(){
         return this.infoMap;
     }
 
