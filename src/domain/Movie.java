@@ -20,7 +20,10 @@ public class Movie extends Media{
 
     private void constructInfoMap(){
         infoMap.put("Trailer",new ArrayList<>());
-        Video trailer = new Video("Trailer for movie: ");
+        infoMap.put("Movie", new ArrayList<>());
+        Video trailer = new Video("Movie Trailer 1");
+        Video movie = new Video(getName());
         infoMap.get("Trailer").add(trailer);
+        infoMap.get("Movie").add(movie);
     }
 }

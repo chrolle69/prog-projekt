@@ -40,7 +40,7 @@ public class UserInterface
         this.displayBoxWidth = 140;
         this.displayBoxHeight = 280;
         this.displayBoxGap = 20;
-        this.popUpWidth = 650;
+        this.popUpWidth = 750;
         this.popUpHeight = 500;
         this.isFavoritesOn = false;
         this.selectedCategories = new ArrayList<>();
@@ -318,7 +318,7 @@ public class UserInterface
     {
         //Instantiating frame and sets size and location
         JFrame mediaFrame = new JFrame();
-        mediaFrame.setSize(popUpWidth, popUpHeight);
+        //mediaFrame.setSize(popUpWidth, popUpHeight);
         mediaFrame.setMinimumSize(new Dimension(popUpWidth, popUpHeight));
         int popUpHoriLoc = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - popUpWidth / 2;
         int popUpVerLoc = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - popUpHeight / 2;
@@ -390,7 +390,12 @@ public class UserInterface
                 video.add(new Box.Filler(size, size, size));
 
                 //Video title textarea
-                JLabel videoTitle = new JLabel(episode.getName() + ":");
+                String videoTitleString = episode.getName();
+                if(videoTitleString.length() > 20)
+                {
+                    videoTitleString = videoTitleString.substring(0, 20) + "...";
+                }
+                JLabel videoTitle = new JLabel(videoTitleString + ":");
                 videoTitle.setMaximumSize(new Dimension(200, 20));
                 videoTitle.setBackground(frame.getBackground());
                 video.add(videoTitle);
@@ -406,7 +411,10 @@ public class UserInterface
         }
 
         //Moves the scrollbar to the top.
-        SwingUtilities.invokeLater(() -> {videoListScroll.getVerticalScrollBar().setValue(0);});
+        SwingUtilities.invokeLater(() -> 
+        {
+            videoListScroll.getVerticalScrollBar().setValue(0);
+        });
         
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -431,7 +439,7 @@ public class UserInterface
 
         //TextArea for the play message
         JTextArea video = new JTextArea(playMessage);
-        float fontsize = video.getFont().getSize() + 25f;
+        float fontsize = video.getFont().getSize() + 20f;
         video.setFont(video.getFont().deriveFont(fontsize));
         video.setBackground(new Color(0, 0, 0));
         video.setForeground(new Color(255, 255, 255));
