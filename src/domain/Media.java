@@ -66,25 +66,4 @@ public abstract class Media {
     public Type getType(){
         return this.type;
     }
-    public void loadData(List<List<String>> mediaFile, List<Media> targetList) {
-        for (List<String> media : mediaFile) {
-            int listLength = mediaFile.size();
-            String name = media.get(0);
-            String year = media.get(1);
-            List<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
-            double rating = Double.valueOf(media.get(3).replace(",", "."));
-            if (listLength == 4) {
-                String seasonToEpisode = media.get(4);
-                String posterPath = "Data/serieforsider/";
-                targetList.add(new Series(name, category, rating, year, posterPath, seasonToEpisode));
-            } else {
-                String posterPath = "Data/filmplakater/";
-                targetList.add(new Movie(name, category, rating, year, posterPath));
-            }
-            for (String string : category) {
-                categories.add(string);
-            }
-        }
-    }
-
 }

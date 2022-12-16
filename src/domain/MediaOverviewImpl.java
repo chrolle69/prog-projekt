@@ -33,6 +33,9 @@ public class MediaOverviewImpl implements MediaOverview {
     public void loadData(List<List<String>> mediaFile, List<Media> targetList) {
         for (List<String> media : mediaFile) {
             int listLength = media.size();
+            if (listLength <4){
+                break;
+            }
             String name = media.get(0);
             String year = media.get(1);
             List<String> category = new ArrayList<>(Arrays.asList(media.get(2).split("\\s*,\\s*")));
@@ -62,7 +65,7 @@ public class MediaOverviewImpl implements MediaOverview {
     public void removeFavorite(Media media){
         int indexer = 0;
         for (Media medias : getFavoriteMedia()){
-            if (medias.getName() == media.getName()){
+            if (medias.getName().equals(media.getName())){
                 this.favoriteList.remove(indexer);
                 break;
             }
