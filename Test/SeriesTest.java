@@ -1,42 +1,96 @@
-import org.junit.jupiter.api.Test;
-import domain.*;
+import java.util.*;
+import domain.Series;
+import domain.Video;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class SeriesTest {
 
-class SeriesTest {
-    @Test
-    void testToString(){
-        MediaOverviewImpl mediaOverview = new MediaOverviewImpl();
+	@Before
+	public void setUp() {
+		System.out.println("**** START ****");
+	}
 
-        List<List<String>> testMediaData = Arrays.asList(
-                Arrays.asList("Test Media 1", "2001", "Action, Drama", "5.0", "1-13, 2-25, 3-12, 4-55, 5-12;"),
-                Arrays.asList("Test Media 2", "2002", "Comedy, Romance", "4.5", "1-17, 2-25, 3-16;"),
-                Arrays.asList("Test Media 3", "2003", "Thriller, Horror", "4.0", "1-9, 2-25, 3-19, 4-28;")
-        );
-        mediaOverview.loadData(testMediaData, mediaOverview.getMediaList());
-        List<Media> mediaList = mediaOverview.getMediaList();
-        String exp ="Test Media 1; 2001; Action, Drama; 5.0; 1-13, 2-25, 3-12, 4-55, 5-12;";
-        assertEquals(exp,mediaList.get(200).toString());
+	@After
+	public void tearDown() {
+		System.out.println("**** END ****");
+	}
 
-    }
-    @Test
-    void testGetInfoMap(){
-        MediaOverviewImpl mediaOverview = new MediaOverviewImpl();
-        List<List<String>> testMediaData = Arrays.asList(
-                Arrays.asList("Test Media 1", "2001", "Action, Drama", "5.0", "1-13, 2-25, 3-12, 4-55, 5-12;"),
-                Arrays.asList("Test Media 2", "2002", "Comedy, Romance", "4.5", "1-17, 2-25, 3-16;"),
-                Arrays.asList("Test Media 3", "2003", "Thriller, Horror", "4.0", "1-9, 2-25, 3-19, 4-28;")
-        );
-        mediaOverview.loadData(testMediaData, mediaOverview.getMediaList());
-        List<Media> mediaList = mediaOverview.getMediaList();
-        Map<String, List<Video>> mediaMap = mediaList.get(201).getInfoMap();
-        assertNotNull(mediaMap);
+	@Test
+	public void oneSeasonTest() {
+		String season1 = "1";
+		String episode1 = "2";
+		
+		ArrayList<String> episodeNamesExcpected = new ArrayList<>();
+		ArrayList<String> episodeNamesResult = new ArrayList<>();
+		ArrayList<Video> EpisodeList = new ArrayList<>();
+		
+
+		EpisodeList.add(new Video("Episode 1"));
+		EpisodeList.add(new Video("Episode 2"));
+		
+
+		Series series = new Series(null, null, 0.5, null, null, season1 + "-" + episode1);
+		Map<String, List<Video>> seasonToEpisode = series.getInfoMap();
+
+		List<Video> episodes = seasonToEpisode.get(season1);
+
+		for (Video episode : episodes) {
+			episodeNamesResult.add(episode.getName());
+		}
+
+		for (int i = 1; i < Integer.valueOf(episode1) + 1; i++) {
+			episodeNamesExcpected.add("Episode " + i);
+		}
 
 
-    }
+		assertEquals(episodeNamesResult, episodeNamesExcpected);
+
+
+	}
+
+
+	@Test
+	public void TwoSeasonTest() {
+		String season1 = "1";
+		String episode1 = "3";
+
+		String season2 = "2";
+		String episode2 = "2";
+		
+		ArrayList<String> episodeNamesExcpected = new ArrayList<>();
+		ArrayList<String> episodeNamesResult = new ArrayList<>();
+		ArrayList<Video> EpisodeList = new ArrayList<>();
+
+
+		EpisodeList.add(new Video("Episode 1"));
+		EpisodeList.add(new Video("Episode 2"));
+
+		Series series = new Series(null, null, 0.5, null, null, season1 + "-" + episode1 + ", " + season2 + "-" + episode2);
+		Map<String, List<Video>> seasonToEpisode = series.getInfoMap();
+
+		List<Video> episodes = seasonToEpisode.get(season1);
+		for (Video episode : episodes) {
+			episodeNamesResult.add(episode.getName());
+		}
+		for (int i = 1; i < Integer.valueOf(episode1) + 1; i++) {
+			episodeNamesExcpected.add("Episode " + i);
+		}
+
+		episodes = seasonToEpisode.get(season2);
+		for (Video episode : episodes) {
+			episodeNamesResult.add(episode.getName());
+		}
+		for (int i = 1; i < Integer.valueOf(episode2) + 1; i++) {
+			episodeNamesExcpected.add("Episode " + i);
+		}
+
+
+		assertEquals(episodeNamesResult, episodeNamesExcpected);
+
+
+	}
 }
